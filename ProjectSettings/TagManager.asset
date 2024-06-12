@@ -8,6 +8,10 @@ TagManager:
   - Lvl1
   - MainLightLvl1
   - Gate1
+  - Enemy
+  - Platform1
+  - Platform2
+  - Platform3
   layers:
   - Default
   - TransparentFX

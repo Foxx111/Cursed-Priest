@@ -1,25 +1,89 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public Rigidbody rb;
-    public float startingHealth = 40;
-    public float currentHealth;
-    float maxHealth = 100f;
+    int startingHealthPlayer = 100;
+    public int currentHealthplayer;
+    bool isDead = false;
+    public GameObject player;
+    Animator animator;
+    float toggleImageTime = 1.5f;
+    AudioSource playerAudioSource;
+    EnemyAttack enemyAttack;
+    bool damaged;
+    public Slider healthSlider;
+    public Image toggleHurtImage;
+    public AudioClip deathPlayerSound;
+    public TextMeshProUGUI coinsText;
+    public TextMeshProUGUI killsText;
+    public GameObject TheEnd;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody>();   
-        currentHealth = startingHealth;
+        animator = GetComponent<Animator>();
+        enemyAttack = new EnemyAttack();
+        currentHealthplayer = startingHealthPlayer;
+        playerAudioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(currentHealth >= maxHealth) currentHealth = 100;
-        Debug.Log(currentHealth);
+        if(currentHealthplayer > 100)
+        {
+            currentHealthplayer = 100;
+        }
+        if (currentHealthplayer <= 0 && !isDead)
+        {
+            Death();
+        }
+        if (damaged)
+        {
+            toggleHurtImage.color = Color.red;
+        }
+        else
+        {
+            toggleHurtImage.color = Color.Lerp(toggleHurtImage.color, Color.clear, toggleImageTime * Time.deltaTime);
+        }
+        damaged = false;
+        healthSlider.value = currentHealthplayer;
+    }
+
+    public void TakeDamage(int amt)
+    {
+        Debug.Log("taking damage");
+        Debug.Log(currentHealthplayer);
+        currentHealthplayer -= amt;
+        //playerAudioSource.Play();
+        damaged = true;
+        if (currentHealthplayer <= 0)
+        {
+            //animator.SetTrigger("Die");
+            Death();
+        }
+    }
+
+    void Death()
+    {
+        //SceneScript.PlayerDied();
+        toggleHurtImage.color = Color.clear;
+        //Time.timeScale = 0;
+        coinsText.text = "coins : " + CoinCounter.coinCount.ToString();
+        killsText.text = "kills : " + KillManager.killCount.ToString();
+        isDead = true;
+        playerAudioSource.clip = deathPlayerSound;
+        playerAudioSource.Play();
+        TheEnd.SetActive(true);
+
+    }
+    void RestartLevel()
+    {
+        SceneManager.LoadScene(0);
+        //ScoreManagerScript.score = 0;
     }
 }
