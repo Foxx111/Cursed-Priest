@@ -34,7 +34,7 @@ public class EnemyPlatform : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log(playerPlatform.currentPlatform + " " + currentEnemyPlatform);
+        Debug.Log(playerPlatform.currentPlatform + " " + currentEnemyPlatform);
         if (stasgeCherck)
         {
 

@@ -23,8 +23,11 @@ public class BossLvl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.name + " , " + other.tag);
+        Debug.Log("Platform3 Entered");
         if (other.CompareTag("Platform3"))
         {
+
             Enemy.SetActive(true);
             MainPanel.SetActive(false);
             EnemyUI.SetActive(true);

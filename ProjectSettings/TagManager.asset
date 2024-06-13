@@ -12,6 +12,13 @@ TagManager:
   - Platform1
   - Platform2
   - Platform3
+  - Player1
+  - Gun
+  - Kill
+  - Coin
+  - Gate2
+  - P1Lights
+  - Boss
   layers:
   - Default
   - TransparentFX

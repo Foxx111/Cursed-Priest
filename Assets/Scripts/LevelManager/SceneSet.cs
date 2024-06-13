@@ -21,6 +21,7 @@ public class SceneSet : MonoBehaviour
     {
         Boss = GameObject.FindGameObjectWithTag("Boss");
         enemyHealth = Boss.GetComponent<EnemyHealth>();
+        Boss.SetActive(false);
     }
 
     private void Update()
@@ -50,7 +51,7 @@ public class SceneSet : MonoBehaviour
             gate2Destroyed = true;  
             lvl2Complete = true;
         }
-        else if (CoinCounter.coinCount > 500 && CoinCounter.coinCount < 640 && enemyHealth.currentEnemyHealth <= 0)
+        else if (CoinCounter.coinCount > 500 && CoinCounter.coinCount <= 640 && enemyHealth.currentEnemyHealth <= 0)
         {
             isBossDead = true;
         }
